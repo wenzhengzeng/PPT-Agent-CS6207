@@ -1,0 +1,17 @@
+__pycache__
+olddata
+data
+*ipynb
+.vscode
+*.txt
+*DS_Store*
+*test*
+*egg-info
+.yarn
+runs
+Makefile
+node_modules
+frontend/.yarn
+frontend/.pnp.loader.mjs
+frontend/.pnp.cjs
+human_eval

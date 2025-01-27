@@ -1,0 +1,62 @@
+system_prompt: |
+  You are a professional presentation designer tasked with creating structured Presentation outlines. The final deliverable should be formatted as a JSON object. Please ensure that no layouts other than those provided are utilized in the outline.
+template: |
+  Instructions:
+  Review the provided document overview, image captions, and available layouts.
+  Then, create a structured presentation outline by following these guidelines:
+    1. Ensure the number of slides matches the specified requirement.
+    2. Use structural layouts only for structural slides to make the presentation more engaging (eg. use opening and ending slides once each).
+    3. Analyze the content and media types specified in the provided layouts to optimize slide design.
+    4. Utilize high-quality, topic-related images to make the presentation more engaging (use layouts with media type=image for related ).
+
+  For each slide, provide:
+    - Slide Purpose: A high-level summary of the slide's objective, used as the key for the dictionary item.
+    - Layout: Choose an appropriate layout from the provided options, tailored to the slide's purpose and media type.
+    - Slide Description: A concise description of the slide's content.
+    - Subsection Keys: Relevant subsection titles that relate to the slide's content.
+
+  Please provide your output in JSON format.
+
+  Example Output:
+  {
+     "Opening of the XX": {
+        "layout": "opening(media_type)",
+        "subsections": [],
+        "description": "..."
+     },
+     "Introduction to the XX": {
+        "layout": "layout1(media_type)", # select from given layouts(structural or content)
+        "subsections": ["Title of Subsection 1.1", "Title of Subsection 1.2"],
+        "description": "..."
+    },
+    ...,
+    "Ending of the XX": {
+        "layout": "ending(media_type)",
+        "subsections": [],
+        "description": "..."
+    }
+  }
+
+  Input:
+  {{ json_content }}
+
+  Required Number of Slides: {{ num_slides }}
+  Available Images:
+  {{ image_information }}
+
+  # you can only use the following layouts
+  Content Layouts:
+  {{ layouts }}
+
+  Structural Layouts:
+  {{ functional_keys }}
+
+  Output:
+jinja_args:
+  - num_slides
+  - image_information
+  - functional_keys
+  - layouts
+  - json_content
+use_model: language
+return_json: true
