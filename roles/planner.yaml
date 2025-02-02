@@ -16,8 +16,11 @@ template: |
     - Subsection Keys: Relevant subsection titles that relate to the slide's content.
 
   Please provide your output in JSON format.
+  
+  The Number of Slides in Your Output JSON MUST BE EQUAL to the Number of Slides: {{ num_slides }}
+  For the layouts, usually, first slide is the opening, last slide is the ending, and the other slides are the content slides (choose from the content layouts).
 
-  Example Output:
+  Example Output for a 3-slide presentation:
   {
      "Opening of the XX": {
         "layout": "opening(media_type)",
@@ -39,8 +42,7 @@ template: |
 
   Input:
   {{ json_content }}
-
-  Required Number of Slides: {{ num_slides }}
+  
   Available Images:
   {{ image_information }}
 

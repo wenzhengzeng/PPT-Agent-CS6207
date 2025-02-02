@@ -174,6 +174,61 @@ Stage Output:
 
 PPTCrew takes presentation (step 3.), slide_induction (step 5.), and doc_json + images (step 4.) as input and generates a new pptx file.
 
+a). For doc_json (refined_doc.json), it will use it to generate contents for each slide, conditioned by number of slides. (Not conditioned by the layout of the slide). Example output:
+
+```json
+    {
+    "Opening of the History of OpenAI": {
+        "layout": "opening:text",
+        "subsections": [],
+        "description": "Introduce the topic of OpenAI, highlighting its historical significance and the overarching 
+    vision behind its creation."
+    },
+    "Key Milestones and Impact of OpenAI": {
+        "layout": "Bullet Points with Highlighted Key Terms:text",
+        "subsections": ["Foundation of OpenAI", "Core Mission and Principles", "Early Research and Strategic Shifts",
+    "Breakthroughs in AI Models", "Global Influence in AI Development", "Ongoing Challenges and Future Goals"],
+        "description": "Provide a concise overview of the foundational aspects, achievements, and global impact of 
+    OpenAI, closing with an emphasis on the challenges ahead."
+    }
+    }
+```
+
+
+b). After generating the contents of each slide, it will use the layout_induct (step 6.) to generate the contents to match the specific layout of each slide. Prompt in `./roles/planner.yaml`
+Example output:
+
+```json
+    {
+    "main_title": {
+        "data": ["History of OpenAI"]
+    },
+    "subtitle": {
+        "data": ["Exploring its origins and visionary impact"]
+    },
+    "presenter": {
+        "data": ["Presenter Name"]
+    }
+    }
+```
+
+c). Then it will call the LLM to generate editing code, and execute the code to generate the slides of the final pptx file. Example editing code:
+
+
+```python
+# ('main_title', 'text', 'quantity_change: 0', ['Tourism & Culture:'], ['History of OpenAI'])
+replace_paragraph(0, 0, "History of OpenAI")
+
+# ('subtitle', 'text', 'quantity_change: 0', ['APPRECIATING THE TANGIBLE & THE INTANGIBLE OF BHUBANESWAR THROUGH 
+CULTURAL TOURISM'], ['Exploring its origins and visionary impact'])
+replace_paragraph(1, 0, "Exploring its origins and visionary impact")
+
+# ('presenter', 'text', 'quantity_change: 0', ['By Ayona Bhaduri'], ['Presenter Name'])
+replace_paragraph(1, 1, "Presenter Name")
+```
+
+
+<!-- 
 ```python
 crew = pptgen.PPTCrew(text_model, error_exit=False, retry_times=5)
 crew.set_reference(presentation, slide_induction)
@@ -181,4 +236,4 @@ crew.generate_pres(generation_config, images, slides_count, doc_json)
 ```
 
 Stage Input:
-- 
+-  -->

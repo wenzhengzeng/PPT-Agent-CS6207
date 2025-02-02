@@ -17,7 +17,6 @@ import torch
 # PYTHONPATH=PPTAgent/src:$PYTHONPATH
 os.sys.path.append('./src')
 
-# --- imports from your project ---
 from FlagEmbedding import BGEM3FlagModel
 from marker.models import create_model_dict
 import induct
@@ -28,12 +27,20 @@ from multimodal import ImageLabler
 from presentation import Presentation
 from utils import Config, is_image_path, pjoin, ppt_to_images, tenacity
 
+from doc_handling import refine_document
+from topic_gen import topic_generate
+
 # ---------------
 # Global settings
 # ---------------
 
+# load api key
+with open('api_key.json', 'r') as f:
+    api_key = json.load(f)
+    openai_api_key = api_key['openai_api_key']
+
 LLM_MODEL = LLM(model="gpt-4o-2024-11-20",
-                api_key="")
+                api_key=openai_api_key)
 
 
 RUNS_DIR = "runs"
@@ -44,9 +51,7 @@ STAGES = [
     "PPT Generation",
     "Success!",
 ]
-REFINE_TEMPLATE_PATH = "prompts/document_refine.txt"
 CAPTION_PROMPT_PATH = "prompts/caption.txt"
-TOPIC_GENERATE_PROMPT_PATH = "prompts/topic_generate.txt"
 
 # For demonstration, let's load exactly 1 model (instead of multiple).
 NUM_MODELS = 1
@@ -75,66 +80,6 @@ def setup_models(language_model, vision_model):
 # -----------
 # Main logic
 # -----------
-def topic_generate(language_model, topic: str):
-    """Generate a JSON doc structure from a given text topic using your language model."""
-    # Example prompt
-    prompt = (
-        "Please generate a detailed presentation planning document about "
-        + topic
-        + ", detail to about 1000 words. "
-        + "Follow the format of the example output.\n"
-        + """
-{
-    "title": "title of document",
-    "sections": [
-        {
-            "title": "title of section1",
-            "subsections": [
-                {
-                    "title": "title of subsection1.1",
-                    "content": "content of subsection1.1"
-                },
-                {
-                    "title": "title of subsection1.2",
-                    "content": "content of subsection1.2"
-                }
-            ]
-        },
-        {
-            "title": "title of section2",
-            "subsections": [
-                {
-                    "title": "title of subsection2.1",
-                    "content": "content of subsection2.1"
-                }
-            ]
-        }
-    ]
-}
-"""
-    )
-    text = language_model(prompt, return_json=True)
-    if not isinstance(text, dict):
-        raise ValueError("Text is not in JSON format or could not parse model output.")
-    return text
-
-
-@tenacity
-def refine_document(language_model, markdown_document: str):
-    """
-    Use your refine prompt to convert raw parsed PDF text
-    into a structured JSON (doc_json).
-    """
-    with open(REFINE_TEMPLATE_PATH, "r", encoding="utf-8") as f:
-        refine_template = f.read()
-
-    prompt = refine_template.replace("{{markdown_document}}", markdown_document)
-    doc_json = language_model(prompt, return_json=True)
-    if not isinstance(doc_json, dict):
-        raise ValueError("Refined document is not in valid JSON format.")
-    return doc_json
-
-
 def generate_slides(
     language_model,
     vision_model,
@@ -260,11 +205,15 @@ def generate_slides(
     if not os.path.exists(template_img_dir) or len(os.listdir(template_img_dir)) == 0:
         # Save a stripped version of the PPT
         deepcopy(presentation).save(
-            pjoin(pptx_config.RUN_DIR, "template.pptx"), layout_only=True
+            pjoin(pptx_config.RUN_DIR, "template.pptx"), layout_only=False
         )
         ppt_to_images(
             pjoin(pptx_config.RUN_DIR, "template.pptx"), template_img_dir
         )
+
+    template_presentation = Presentation.from_file(
+        pjoin(pptx_config.RUN_DIR, "template.pptx"), pptx_config
+    )
 
     slide_inducter = induct.SlideInducter(
         vision_model,
@@ -282,8 +231,11 @@ def generate_slides(
     # -- 6. PPT Generation --
     print("[STAGE] PPT Generation")
     # instantiate the “crew” that handles text generation for slides
-    crew = pptgen.PPTCrew(vision_model, language_model, text_model, error_exit=False, retry_times=1)
-    crew.set_reference(presentation, slide_induction)
+    crew = pptgen.PPTCrew(vision_model, language_model, text_model,
+                        error_exit=True, retry_times=3)
+
+    crew.set_reference(template_presentation, slide_induction, generation_config)
+
     # Actually generate the new PPT
     # (the code will produce final.pptx in output_dir)
     crew.generate_pres(

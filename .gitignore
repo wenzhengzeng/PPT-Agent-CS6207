@@ -1,7 +1,7 @@
 __pycache__
 olddata
 data
-*ipynb
+# *ipynb
 .vscode
 *.txt
 *DS_Store*
@@ -15,8 +15,5 @@ frontend/.pnp.loader.mjs
 frontend/.pnp.cjs
 human_eval
 
-# runs
-*slide*
-*pptx
-*jpg
+runs
 api_key.json

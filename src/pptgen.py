@@ -67,6 +67,7 @@ class PPTGen(ABC):
         self,
         presentation: Presentation,
         slide_induction: dict,
+        generation_config: Config,
     ):
         """
         Set the reference presentation and extracted presentation information.
@@ -80,7 +81,7 @@ class PPTGen(ABC):
         """
         self.presentation = presentation
         self.slide_induction = slide_induction
-        
+        self.config = generation_config
         # do not affect the original slide_induction
         slide_induction = slide_induction.copy()
         
@@ -89,7 +90,11 @@ class PPTGen(ABC):
         self.layout_embeddings = torch.stack(
             get_text_embedding(self.layout_names, self.text_model)
         )
-        self.empty_prs = deepcopy(presentation)
+        
+        # save and load a copy of the presentation
+        self.presentation.save(pjoin(self.config.RUN_DIR, "empty_prs.pptx"), layout_only=False)
+        self.empty_prs = Presentation.from_file(pjoin(self.config.RUN_DIR, "empty_prs.pptx"), self.config)
+        # self.empty_prs = deepcopy(presentation)
         return self
 
     def generate_pres(
@@ -139,6 +144,7 @@ class PPTGen(ABC):
             ]
         )
         generated_slides = []
+        print(f"generating {num_slides} slides, with {len(self.outline)} outlines")
         for slide_data in enumerate(self.outline.items()):
             if self.force_pages and slide_data[0] == num_slides:
                 break
@@ -150,9 +156,25 @@ class PPTGen(ABC):
                 succ_flag = False
                 break
         self._save_history(code_executor)
+        
+        for slide in generated_slides:
+            print("generated_slides:", slide.slide_idx, slide.slide_title)
+            for key, value in slide.__dict__.items():
+                print(key, value)
+                
+        # cut off empty_prs.slides by num_slides
+        self.empty_prs.slides = self.empty_prs.slides[:num_slides]
+        self.empty_prs.save(pjoin(self.config.RUN_DIR, "empty_prs_cutoff.pptx"), layout_only=False)
+        print(f"{num_slides} paged empty_prs_cutoff.pptx saved")
+        
+        for slide in self.empty_prs.slides:
+            print("empty_prs.slides:", slide.slide_idx, slide.slide_title)
+            for key, value in slide.__dict__.items():
+                print(key, value)
+        
         if succ_flag:
             self.empty_prs.slides = generated_slides
-            self.empty_prs.save(pjoin(self.config.RUN_DIR, "final.pptx"))
+            self.empty_prs.save(pjoin(self.config.RUN_DIR, "final.pptx"), layout_only=False)
 
     def _save_history(self, code_executor: CodeExecutor):
         """
@@ -190,6 +212,7 @@ class PPTGen(ABC):
             [sub.pop("content") for sub in section["subsections"]]
         if pexists(outline_file):
             outline = json.load(open(outline_file, "r"))
+            outline = self._valid_outline(outline, num_slides)  # safer
         else:
             outline = self.staffs["planner"](
                 num_slides=num_slides,
@@ -200,7 +223,7 @@ class PPTGen(ABC):
                 json_content=doc_overview,
                 image_information=self.image_information,
             )
-            outline = self._valid_outline(outline)
+            outline = self._valid_outline(outline, num_slides)  # add num of slide validation
             json.dump(
                 outline,
                 open(outline_file, "w"),
@@ -209,9 +232,10 @@ class PPTGen(ABC):
             )
         return outline
 
-    def _valid_outline(self, outline: dict, retry: int = 0) -> dict:
+    def _valid_outline(self, outline: dict, num_slides: int, retry: int = 0) -> dict:
         """
         Validate the generated outline.
+        Also validate if num of outline is equal to the number of slides
 
         Raises:
             ValueError: If the outline is invalid.
@@ -222,7 +246,7 @@ class PPTGen(ABC):
                     get_text_embedding(slide["layout"], self.text_model),
                     self.layout_embeddings,
                 )
-                if layout_sim.max() < 0.7:
+                if layout_sim.max() < 0.7:  # TODO: what is the threshold?
                     raise ValueError(
                         f"Layout `{slide['layout']}` not found, must be one of {self.layout_names}"
                     )
@@ -234,6 +258,7 @@ class PPTGen(ABC):
                 raise ValueError(
                     "Invalid outline structure, must be a dict with layout, subsections, description"
                 )
+
         except ValueError as e:
             print(outline, e)
             if retry < self.retry_times:
@@ -243,6 +268,17 @@ class PPTGen(ABC):
                 return self._valid_outline(new_outline, retry + 1)
             else:
                 raise ValueError("Failed to generate outline, tried too many times")
+            
+        # validate if num of outline is equal to the number of slides
+        if len(outline) != num_slides:
+            print(f"Number of outlines ({len(outline)}) does not match the number of slides ({num_slides}). Re-generating outline.")
+            new_outline =  self.staffs["planner"].retry(
+                    "Number of outlines ({len(outline)}) does not match the number of slides ({num_slides}). Re-generating outline.",
+                    f"Number of items in outline must be {num_slides}",
+                    retry + 1
+                )
+            return self._valid_outline(new_outline, num_slides, retry + 1)
+        
         return outline
 
     def _hire_staffs(self, record_cost: bool, **kwargs) -> dict[str, Role]:
