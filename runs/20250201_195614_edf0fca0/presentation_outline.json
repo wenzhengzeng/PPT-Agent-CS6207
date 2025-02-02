@@ -1,0 +1,34 @@
+{
+    "Opening of the History of OpenAI": {
+        "layout": "opening:text",
+        "subsections": [],
+        "description": "An engaging introduction to the presentation, outlining the history of OpenAI and what the audience will take away from the session."
+    },
+    "Founding and Early Vision of OpenAI": {
+        "layout": "Title with Single Bullet Point List:text",
+        "subsections": [
+            "Establishment of OpenAI",
+            "Core Principles and Mission"
+        ],
+        "description": "Covers the initial establishment of OpenAI, including the organization's foundational principles, goals, and its mission to advance artificial intelligence in an ethical and impactful way."
+    },
+    "Major Milestones in Research and Development": {
+        "layout": "Title with Single Bullet Point List:text",
+        "subsections": [
+            "Key Achievements and Models"
+        ],
+        "description": "Explores key research milestones, breakthroughs like GPT models, and OpenAI's major achievements in the field of artificial intelligence."
+    },
+    "Transition to a Hybrid Structure": {
+        "layout": "Title with Single Bullet Point List:text",
+        "subsections": [
+            "From Non-profit to 'Capped-profit'"
+        ],
+        "description": "Details OpenAI's transition from a purely nonprofit organization to a 'capped-profit' structure, highlighting the rationale behind the shift and its implications for AI development."
+    },
+    "Ending of the History of OpenAI": {
+        "layout": "ending:text",
+        "subsections": [],
+        "description": "Concludes the presentation by summarizing the key takeaways and providing a forward-looking perspective on OpenAI's future objectives and challenges."
+    }
+}

@@ -1,0 +1,125 @@
+{
+    "opening:text": {
+        "slides": [
+            1
+        ],
+        "template_id": 1,
+        "content_schema": {
+            "main_title": {
+                "description": "The main focus and topic of the slide",
+                "type": "text",
+                "data": [
+                    "Tourism & Culture:"
+                ]
+            },
+            "subtitle": {
+                "description": "A detailed explanation or elaboration of the main title",
+                "type": "text",
+                "data": [
+                    "APPRECIATING THE TANGIBLE & THE INTANGIBLE OF BHUBANESWAR THROUGH CULTURAL TOURISM"
+                ]
+            },
+            "presenters": {
+                "description": "The names of the authors or presenters of the slide content",
+                "type": "text",
+                "data": [
+                    "By Ayona Bhaduri"
+                ]
+            }
+        }
+    },
+    "ending:text": {
+        "slides": [
+            14
+        ],
+        "template_id": 14,
+        "content_schema": {
+            "main_title": {
+                "description": "Introduces the main topic of the slide",
+                "type": "text",
+                "data": [
+                    "ODISSI DANCER – A Global Ambassador of cultural heritage of Odisha"
+                ]
+            },
+            "content": {
+                "description": "Provides detailed information and context about the subject",
+                "type": "text",
+                "data": [
+                    "Kelucharan Mahapatra’s artistic journey touches every key aspect of the cultural life of Odisha",
+                    "Be it the traditional expertise of the Chitrakars, or the entertaining art forms of Gotipua and Jatra parties, or the Ras Leela performances soaked in bhakti, or the innovations attempted at the Annapurna Theatre Groups, all these experiences, acquired not through formal training but through a continuous interaction with life, contributed richly to his understanding and creation of the Odissi form.",
+                    "And it is the magnanimous presence and personality of this great Guru, his detailed teaching and in depth insights into the entire panorama of Odia culture, that have drawn dancers from across the world to his door to learn his art from him, and continue to attract many more",
+                    "So we see that through Odissi, Kelu Babu was able to not only take Oriya culture to the world but he also succeeded in bringing the world to Odisha to appreciate her rich intangible heritage."
+                ]
+            }
+        }
+    },
+    "Text Emphasized with Bulleted Points:text": {
+        "template_id": 2,
+        "slides": [
+            2,
+            4,
+            5
+        ],
+        "content_schema": {
+            "main_title": {
+                "description": "The main subject or topic of the slide",
+                "type": "text",
+                "data": [
+                    "What is culture?"
+                ]
+            },
+            "introductory_text": {
+                "description": "An introduction or lead-in to the main content",
+                "type": "text",
+                "data": [
+                    "In Sri Aurobindo’s words,"
+                ]
+            },
+            "content_bullets": {
+                "description": "The main discussion points or detailed content of the slide",
+                "type": "text",
+                "data": [
+                    "The culture of a people may be described as the expression of a consciousness of life which formulates itself in three aspects.",
+                    "There is a side of thought, of ideal, of upward will and soul’s aspiration, which is reflected in the people’s philosophy and religion.",
+                    "There is a side of creative self-expression and appreciative aesthesis, intelligence and imagination, which finds expression in its art, poetry, literature, music, dance",
+                    "And, there is a side of practical and outward formulation, which is provided for in its society and politics"
+                ]
+            }
+        }
+    },
+    "Centered Image with Descriptive Text Below:picture": {
+        "template_id": 8,
+        "slides": [
+            8,
+            9
+        ],
+        "content_schema": {
+            "main_title": {
+                "description": "The main title of the slide, introducing the key subject.",
+                "type": "text",
+                "data": [
+                    "The Mukteswara Temple – Early Orissan style"
+                ]
+            },
+            "main_image": {
+                "description": "A visual representation that supports the topic of the slide.",
+                "type": "image",
+                "data": [
+                    "Picture: Intricately carved ancient temple with a central dome, surrounded by detailed sculptures, set in an urban backdrop."
+                ]
+            },
+            "body_content": {
+                "description": "Detailed explanation or description related to the slide's subject.",
+                "type": "text",
+                "data": [
+                    "The finest monument of this early style wherein the sanctum cella and its jagamohana, now more organically related, stand within a balustraded court with an elegant Torana in front – two columns supporting a superstructure of arched shape. The sanctum is pancharatha in plan and the jagamohana with a pyramidal superstructure approaches more nearly the typical Orissan form of the pidha deul.",
+                    "Belonging approximately to the 9th century AD, the Mukteshwara represents a mature expression of the Nagara temple style in Odisha."
+                ]
+            }
+        }
+    },
+    "functional_keys": [
+        "opening:text",
+        "ending:text"
+    ]
+}

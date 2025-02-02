@@ -1,0 +1,37 @@
+{
+    "Opening of the History of OpenAI Presentation": {
+        "layout": "opening:text",
+        "subsections": [],
+        "description": "An introduction to the presentation on the history of OpenAI, outlining the key topics to be covered including the founding, evolution, and future directions."
+    },
+    "Introduction to OpenAI": {
+        "layout": "Bullet Points with Emphasized Text Highlights:text",
+        "subsections": [
+            "Founding and Mission",
+            "Initial Funding and Structure"
+        ],
+        "description": "This slide covers the founding and mission of OpenAI, including its initial funding strategy and organizational structure."
+    },
+    "Major Research Milestones": {
+        "layout": "Bullet Points with Emphasized Text Highlights:text",
+        "subsections": [
+            "Early Achievements and Breakthroughs",
+            "GPT Series",
+            "Robotics and AI Safety"
+        ],
+        "description": "An overview of OpenAI's major research milestones, featuring key achievements such as the development of the GPT series and advancements in robotics and AI safety."
+    },
+    "Transition and Evolution": {
+        "layout": "Bullet Points with Emphasized Text Highlights:text",
+        "subsections": [
+            "OpenAI LP and the Hybrid Model",
+            "Partnerships and Collaborations"
+        ],
+        "description": "Discussion on OpenAI's transition to a capped-profit model under OpenAI LP, and its various partnerships and collaborations."
+    },
+    "Ending of the History of OpenAI Presentation": {
+        "layout": "opening:text",
+        "subsections": [],
+        "description": "A conclusion summarizing OpenAI's impact on AI research, its contribution to public policy, and its ongoing challenges and directions for the future."
+    }
+}

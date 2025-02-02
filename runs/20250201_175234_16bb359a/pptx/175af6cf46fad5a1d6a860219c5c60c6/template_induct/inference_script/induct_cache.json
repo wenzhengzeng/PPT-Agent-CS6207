@@ -1,0 +1,28 @@
+{
+    "opening:text": {
+        "slides": [
+            1
+        ],
+        "template_id": 1,
+        "content_schema": {
+            "main_title": {
+                "description": "The main headline or title of the slide",
+                "type": "text",
+                "data": [
+                    "Weekly Report"
+                ]
+            },
+            "presenter_information": {
+                "description": "Details about the presenter and date of the report",
+                "type": "text",
+                "data": [
+                    "Ouyang Mingyu",
+                    "2024.1.2 - 2024.1.9"
+                ]
+            }
+        }
+    },
+    "functional_keys": [
+        "opening:text"
+    ]
+}

@@ -1,0 +1,29 @@
+{
+    "Opening of the History of OpenAI": {
+        "layout": "opening:text",
+        "subsections": [],
+        "description": "An overview of the presentation focusing on the historical background and evolution of OpenAI."
+    },
+    "Key Developments in OpenAI": {
+        "layout": "opening:text",
+        "subsections": [
+            "Foundation and Mission",
+            "Initial Funding and Partners",
+            "Early Research and Achievements",
+            "Transformers and GPT Series"
+        ],
+        "description": "A detailed look at the foundational aspects, initial funding, partnerships, and the development of key technologies such as Transformers and the GPT series."
+    },
+    "Ethics and Future Directions of OpenAI": {
+        "layout": "opening:text",
+        "subsections": [
+            "Strategic Shift in Business Model",
+            "Partnership with Microsoft",
+            "Commitment to Safe AI Development",
+            "Controversies and Challenges",
+            "Recent Developments",
+            "Future Goals"
+        ],
+        "description": "Exploration of OpenAI's strategic business model shift, ethical challenges, and partnerships, along with its recent achievements and future aspirations."
+    }
+}

@@ -1,0 +1,53 @@
+{
+    "metadata": {
+        "title": "Improving Language Model Reasoning Capabilities with Reinforcement Learning",
+        "author": "Not Specified",
+        "publish date": "2024",
+        "organization": "Not Specified"
+    },
+    "sections": [
+        {
+            "title": "Introduction",
+            "subsections": [
+                {
+                    "title": "State of Large Language Models and Post-Training",
+                    "content": "In recent years, Large Language Models (LLMs) have been rapidly evolving, diminishing the gap towards Artificial General Intelligence (AGI). Post-training has become a crucial component in enhancing reasoning tasks and user preferences with minimal computational resources. OpenAI's o1 series introduced inference-time scaling for reasoning tasks, but effective test-time scaling remains a challenge. Prior approaches, like reinforcement learning (RL) and search algorithms, haven't achieved the performance of o1 models."
+                },
+                {
+                    "title": "Improving Reasoning with Reinforcement Learning",
+                    "content": "This paper explores improving LLM reasoning capabilities using pure RL. Using DeepSeek-V3-Base and GRPO framework, the training led to DeepSeek-R1-Zero with remarkable reasoning behaviors. Despite challenges like readability, enhanced models like DeepSeek-R1 incorporate cold-start data and multi-stage training for superior performance. The model outperforms benchmarks and matches OpenAI-o1's performance in reasoning tasks."
+                },
+                {
+                    "title": "Distilling Knowledge to Smaller Models",
+                    "content": "DeepSeek-R1's reasoning patterns can be distilled into smaller models, resulting in enhanced performance compared to conventional RL on smaller models. Distilled Qwen and Llama models significantly outperform their predecessors and set new benchmarks among dense models."
+                }
+            ]
+        },
+        {
+            "title": "Contributions",
+            "subsections": [
+                {
+                    "title": "Post-Training: Large-Scale Reinforcement Learning",
+                    "content": "RL is applied directly on models without needing supervised fine-tuning (SFT). This enables exploring chain-of-thought for complex problems. DeepSeek-R1-Zero marks a milestone in incentivizing reasoning purely through RL, potentially paving the way for future advancements."
+                },
+                {
+                    "title": "Distillation: Power of Smaller Models",
+                    "content": "The research demonstrates distilling larger model's reasoning patterns into smaller models enhances performance. Distilled models, like DeepSeek-R1-Distill-Qwen-7B, exhibit superior performance on benchmarks. These models and checkpoints are open-sourced for furthering research and development."
+                }
+            ]
+        },
+        {
+            "title": "Summary of Evaluation Results",
+            "subsections": [
+                {
+                    "title": "Performance on Reasoning Tasks",
+                    "content": "DeepSeek-R1 exceeds OpenAI-o1-1217 on AIME 2024 with 79.8% Pass@1 and showcases remarkable results on math and coding tasks. It achieves a high Elo rating on Codeforces, surpassing most human participants. Engineering performance sees improvements helpful for real-world tasks."
+                },
+                {
+                    "title": "Knowledge Benchmark Performance",
+                    "content": "DeepSeek-R1 excels in educational tasks, significantly outperforming DeepSeek-V3 on benchmarks like MMLU with scores of 90.8% and GPQA Diamond with 71.5%. While slightly below OpenAI-o1-1217, it proves competitive against closed models and excels in factual query handling."
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,34 @@
+{
+    "opening:text": {
+        "slides": [
+            1
+        ],
+        "template_id": 1,
+        "content_schema": {
+            "title": {
+                "description": "The main title of the slide",
+                "type": "text",
+                "data": [
+                    "Tourism & Culture:"
+                ]
+            },
+            "subtitle": {
+                "description": "The secondary title or main focus of the slide",
+                "type": "text",
+                "data": [
+                    "APPRECIATING THE TANGIBLE & THE INTANGIBLE OF BHUBANESWAR THROUGH CULTURAL TOURISM"
+                ]
+            },
+            "presenter": {
+                "description": "Name of the person presenting or responsible for the content",
+                "type": "text",
+                "data": [
+                    "By Ayona Bhaduri"
+                ]
+            }
+        }
+    },
+    "functional_keys": [
+        "opening:text"
+    ]
+}

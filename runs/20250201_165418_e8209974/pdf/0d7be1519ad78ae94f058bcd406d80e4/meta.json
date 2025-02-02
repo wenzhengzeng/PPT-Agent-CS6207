@@ -1,0 +1,178 @@
+{
+    "table_of_contents": [
+        {
+            "title": "1. Introduction",
+            "heading_level": null,
+            "page_id": 0,
+            "polygon": [
+                [
+                    70.20751953125,
+                    86.13232421875
+                ],
+                [
+                    161.87548828125,
+                    86.13232421875
+                ],
+                [
+                    161.87548828125,
+                    99.64605712890625
+                ],
+                [
+                    70.20751953125,
+                    99.64605712890625
+                ]
+            ]
+        },
+        {
+            "title": "1.1. Contributions",
+            "heading_level": null,
+            "page_id": 1,
+            "polygon": [
+                [
+                    69.880126953125,
+                    85.1558837890625
+                ],
+                [
+                    164.71484375,
+                    85.1558837890625
+                ],
+                [
+                    164.71484375,
+                    99.08831787109375
+                ],
+                [
+                    69.880126953125,
+                    99.08831787109375
+                ]
+            ]
+        },
+        {
+            "title": "Post-Training: Large-Scale Reinforcement Learning on the Base Model",
+            "heading_level": null,
+            "page_id": 1,
+            "polygon": [
+                [
+                    69.9892578125,
+                    107.716796875
+                ],
+                [
+                    422.5546875,
+                    107.716796875
+                ],
+                [
+                    422.5546875,
+                    121.404296875
+                ],
+                [
+                    69.9892578125,
+                    121.404296875
+                ]
+            ]
+        },
+        {
+            "title": "Distillation: Smaller Models Can Be Powerful Too",
+            "heading_level": null,
+            "page_id": 1,
+            "polygon": [
+                [
+                    70.06201171875,
+                    326.23388671875
+                ],
+                [
+                    323.318359375,
+                    326.23388671875
+                ],
+                [
+                    323.318359375,
+                    339.9033203125
+                ],
+                [
+                    70.06201171875,
+                    339.9033203125
+                ]
+            ]
+        },
+        {
+            "title": "1.2. Summary of Evaluation Results",
+            "heading_level": null,
+            "page_id": 1,
+            "polygon": [
+                [
+                    69.33447265625,
+                    529.5390625
+                ],
+                [
+                    252.01953125,
+                    529.5390625
+                ],
+                [
+                    252.01953125,
+                    542.3832397460938
+                ],
+                [
+                    69.33447265625,
+                    542.3832397460938
+                ]
+            ]
+        }
+    ],
+    "page_stats": [
+        {
+            "page_id": 0,
+            "text_extraction_method": "pdftext",
+            "block_counts": [
+                [
+                    "Span",
+                    91
+                ],
+                [
+                    "Line",
+                    46
+                ],
+                [
+                    "Text",
+                    5
+                ],
+                [
+                    "SectionHeader",
+                    1
+                ],
+                [
+                    "PageFooter",
+                    1
+                ]
+            ]
+        },
+        {
+            "page_id": 1,
+            "text_extraction_method": "pdftext",
+            "block_counts": [
+                [
+                    "Span",
+                    101
+                ],
+                [
+                    "Line",
+                    45
+                ],
+                [
+                    "ListItem",
+                    6
+                ],
+                [
+                    "SectionHeader",
+                    4
+                ],
+                [
+                    "ListGroup",
+                    3
+                ],
+                [
+                    "PageFooter",
+                    1
+                ]
+            ]
+        }
+    ],
+    "debug_data_path": "debug_data/DeepSeek-R1-short"
+}

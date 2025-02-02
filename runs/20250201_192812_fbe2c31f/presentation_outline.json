@@ -1,0 +1,22 @@
+{
+    "Opening of the Presentation": {
+        "layout": "opening:text",
+        "subsections": [],
+        "description": "An engaging introduction to Deepseek, outlining its relevance, mission, and the topics to be covered in the presentation."
+    },
+    "Core Features of Deepseek": {
+        "layout": "Text-Centric Slide with Highlighted Key Points:text",
+        "subsections": [
+            "Automated Analysis Pipelines",
+            "Natural Language Data Queries",
+            "Advanced Visualization Tools",
+            "Predictive and Prescriptive Analytics"
+        ],
+        "description": "Highlights the core features of Deepseek with concise explanations of each feature and how they bring value to users."
+    },
+    "Closing of the Presentation": {
+        "layout": "ending:text",
+        "subsections": [],
+        "description": "Summarizes why Deepseek is transformative and ends with a call to action for the audience to explore or adopt the platform."
+    }
+}

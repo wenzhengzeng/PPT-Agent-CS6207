@@ -1,0 +1,74 @@
+{
+    "opening:text": {
+        "slides": [
+            1
+        ],
+        "template_id": 1,
+        "content_schema": {
+            "main_title": {
+                "description": "Represents the primary title of the slide",
+                "type": "text",
+                "data": [
+                    "Title"
+                ]
+            },
+            "subtitle": {
+                "description": "Represents the secondary title providing additional context",
+                "type": "text",
+                "data": [
+                    "subtitle"
+                ]
+            }
+        }
+    },
+    "ending:text": {
+        "slides": [
+            5
+        ],
+        "template_id": 5,
+        "content_schema": {
+            "main_title": {
+                "description": "The primary heading of the slide, representing its main topic or purpose",
+                "type": "text",
+                "data": [
+                    "Title"
+                ]
+            },
+            "main_content": {
+                "description": "Core textual content or information presented in the slide",
+                "type": "text",
+                "data": [
+                    "Text"
+                ]
+            }
+        }
+    },
+    "Title with Single Bullet Point List:text": {
+        "template_id": 2,
+        "slides": [
+            2,
+            3,
+            4
+        ],
+        "content_schema": {
+            "main_title": {
+                "description": "The main heading or title of the slide",
+                "type": "text",
+                "data": [
+                    "Title"
+                ]
+            },
+            "content_text": {
+                "description": "The primary textual content or message displayed on the slide",
+                "type": "text",
+                "data": [
+                    "Text"
+                ]
+            }
+        }
+    },
+    "functional_keys": [
+        "opening:text",
+        "ending:text"
+    ]
+}

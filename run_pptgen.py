@@ -15,13 +15,13 @@ import PIL.Image
 import torch
 
 # PYTHONPATH=PPTAgent/src:$PYTHONPATH
-os.sys.path.append('/Users/yyyang/Codes/PPTAgent/src')
+os.sys.path.append('./src')
 
 # --- imports from your project ---
 from FlagEmbedding import BGEM3FlagModel
 from marker.models import create_model_dict
 import induct
-import llms
+from llms import LLM
 import pptgen
 from model_utils import get_image_model, parse_pdf
 from multimodal import ImageLabler
@@ -31,6 +31,11 @@ from utils import Config, is_image_path, pjoin, ppt_to_images, tenacity
 # ---------------
 # Global settings
 # ---------------
+
+LLM_MODEL = LLM(model="gpt-4o-2024-11-20",
+                api_key="")
+
+
 RUNS_DIR = "runs"
 STAGES = [
     "PPT Parsing",
@@ -41,26 +46,27 @@ STAGES = [
 ]
 REFINE_TEMPLATE_PATH = "prompts/document_refine.txt"
 CAPTION_PROMPT_PATH = "prompts/caption.txt"
+TOPIC_GENERATE_PROMPT_PATH = "prompts/topic_generate.txt"
 
 # For demonstration, let's load exactly 1 model (instead of multiple).
 NUM_MODELS = 1
 DEVICE_COUNT = torch.cuda.device_count() or torch.mps.device_count()
 
 # Set up your fallback logic: if you have multiple possible LLMs, handle that in code below
-def setup_models():
+def setup_models(language_model, vision_model):
     """
     Try to connect to your primary model, and if unsuccessful,
     possibly fall back to a different model.
     """
-    if llms.language_model.test_connection() and llms.vision_model.test_connection():
-        print("Primary models connected successfully.")
+    if language_model.test_connection() and vision_model.test_connection():
+        print(f"Primary models connected successfully: {language_model.model} and {vision_model.model}")
         return
 
-    if llms.gpt4o.test_connection():
-        print("Switching to OpenAI GPT-4o models as fallback.")
-        llms.language_model = llms.gpt4o
-        llms.vision_model = llms.gpt4o
-        return
+    # if llms.gpt4o.test_connection():
+    #     print("Switching to OpenAI GPT-4o models as fallback.")
+    #     language_model = gpt4o
+    #     vision_model = gpt4o
+    #     return
 
     raise RuntimeError(
         "No working model connections available. Check your API keys and environment."
@@ -69,7 +75,7 @@ def setup_models():
 # -----------
 # Main logic
 # -----------
-def topic_generate(topic: str):
+def topic_generate(language_model, topic: str):
     """Generate a JSON doc structure from a given text topic using your language model."""
     # Example prompt
     prompt = (
@@ -107,14 +113,14 @@ def topic_generate(topic: str):
 }
 """
     )
-    text = llms.language_model(prompt, return_json=True)
+    text = language_model(prompt, return_json=True)
     if not isinstance(text, dict):
         raise ValueError("Text is not in JSON format or could not parse model output.")
     return text
 
 
 @tenacity
-def refine_document(markdown_document: str):
+def refine_document(language_model, markdown_document: str):
     """
     Use your refine prompt to convert raw parsed PDF text
     into a structured JSON (doc_json).
@@ -123,18 +129,21 @@ def refine_document(markdown_document: str):
         refine_template = f.read()
 
     prompt = refine_template.replace("{{markdown_document}}", markdown_document)
-    doc_json = llms.language_model(prompt, return_json=True)
+    doc_json = language_model(prompt, return_json=True)
     if not isinstance(doc_json, dict):
         raise ValueError("Refined document is not in valid JSON format.")
     return doc_json
 
 
 def generate_slides(
+    language_model,
+    vision_model,
     ppt_template_path: str,
     pdf_path: Optional[str],
     topic: Optional[str],
     slides_count: int,
     output_dir: str,
+    project_id: str,
 ):
     """
     Given a PPT template and either a PDF file or a topic string,
@@ -155,7 +164,7 @@ def generate_slides(
     generation_config = Config(output_dir)
     # We'll store the "pptx" in a unique subfolder for safety.
     pptx_md5 = hashlib.md5(open(ppt_template_path, "rb").read()).hexdigest()
-    pptx_config = Config(pjoin("runs", "pptx", pptx_md5))
+    pptx_config = Config(pjoin(RUNS_DIR, project_id, "pptx", pptx_md5))
     os.makedirs(pptx_config.RUN_DIR, exist_ok=True)
 
     # If you want to copy the PPT template into the "pptx" folder for caching:
@@ -188,15 +197,16 @@ def generate_slides(
                 os.rename(old_name, new_name)
 
     # You may optionally caption each slide image:
-    labler = ImageLabler(presentation, pptx_config)
+    labler = ImageLabler(vision_model=vision_model, presentation=presentation, config=pptx_config)
     labler.caption_images()
+
 
     # -- 4. Parse PDF or use a text topic to get doc_json --
     print("[STAGE] PDF/Topic Parsing")
     if pdf_path:
         # We’ll store PDF results under runs/pdf/<md5>/...
         pdf_md5 = hashlib.md5(open(pdf_path, "rb").read()).hexdigest()
-        parsedpdf_dir = pjoin("runs", "pdf", pdf_md5)
+        parsedpdf_dir = pjoin(RUNS_DIR, project_id, "pdf", pdf_md5)
         os.makedirs(parsedpdf_dir, exist_ok=True)
         # If the refined document is not cached, parse the PDF text & refine
         refined_doc_json_path = pjoin(parsedpdf_dir, "refined_doc.json")
@@ -213,7 +223,7 @@ def generate_slides(
                     if is_image_path(k):
                         img_path = pjoin(parsedpdf_dir, k)
                         try:
-                            text_cap = llms.vision_model(caption_prompt, [img_path])
+                            text_cap = vision_model(caption_prompt, [img_path])
                             with PIL.Image.open(img_path) as img:
                                 size = img.size
                             images_info[img_path] = [text_cap, size]
@@ -223,7 +233,7 @@ def generate_slides(
                     json.dump(images_info, f, ensure_ascii=False, indent=4)
 
             # Now refine the markdown doc => JSON
-            doc_json = refine_document(text_content)
+            doc_json = refine_document(language_model, text_content)
             json.dump(doc_json, open(refined_doc_json_path, "w"), indent=4)
         else:
             print("[INFO] Using cached refined_doc.json")
@@ -231,11 +241,17 @@ def generate_slides(
         # Also load the PDF's image captions (if you want them for generation):
         caption_json_path = pjoin(parsedpdf_dir, "caption.json")
         images = json.load(open(caption_json_path)) if os.path.exists(caption_json_path) else {}
+        
     else:
         # If no PDF, we assume we have a text topic
         print(f"[INFO] Generating from topic: '{topic}'")
         pdf_md5 = topic  # just reuse the "pdf" variable for your code’s logic
-        doc_json = topic_generate(topic)
+        doc_json = topic_generate(language_model, topic)
+        
+        # save doc_json to file
+        topic_doc_json_path = pjoin(RUNS_DIR, project_id, "text_topic", pdf_md5)
+        os.makedirs(topic_doc_json_path, exist_ok=True)
+        json.dump(doc_json, open(pjoin(topic_doc_json_path, "topic_doc.json"), "w"), indent=4)
         images = {}
 
     # -- 5. Slide Induction (looking at the PPT structure) --
@@ -251,6 +267,8 @@ def generate_slides(
         )
 
     slide_inducter = induct.SlideInducter(
+        vision_model,
+        language_model,
         presentation,
         ppt_image_folder,
         template_img_dir,
@@ -260,10 +278,11 @@ def generate_slides(
     )
     slide_induction = slide_inducter.content_induct()
 
+
     # -- 6. PPT Generation --
     print("[STAGE] PPT Generation")
     # instantiate the “crew” that handles text generation for slides
-    crew = pptgen.PPTCrew(text_model, error_exit=False, retry_times=5)
+    crew = pptgen.PPTCrew(vision_model, language_model, text_model, error_exit=False, retry_times=1)
     crew.set_reference(presentation, slide_induction)
     # Actually generate the new PPT
     # (the code will produce final.pptx in output_dir)
@@ -312,13 +331,21 @@ def main():
         default=None,
         help="Directory to store the final PPT. Defaults to runs/<DATE_TIME>_<UUID>/",
     )
+    parser.add_argument(
+        "--api_key",
+        default=None,
+        help="OpenAI API key",
+    )
     args = parser.parse_args()
 
     # If user doesn't specify output_dir, create a unique one.
     if not args.output_dir:
         dt_str = datetime.now().strftime("%Y%m%d_%H%M%S")
         unique_id = str(uuid.uuid4())[:8]
-        args.output_dir = os.path.join(RUNS_DIR, f"{dt_str}_{unique_id}")
+        project_id = f"{dt_str}_{unique_id}"
+        args.output_dir = os.path.join(RUNS_DIR, project_id)
+    else:
+        project_id = args.output_dir.split('/')[-1]
 
     # Basic checks
     if args.pdf is None and args.topic is None:
@@ -329,15 +356,20 @@ def main():
         sys.exit(1)
 
     print("[INFO] Setting up models...")
-    setup_models()  # your fallback or direct approach
+    language_model = LLM_MODEL
+    vision_model = LLM_MODEL
+    setup_models(language_model, vision_model)
 
     # Now run the pipeline
     generate_slides(
+        language_model,
+        vision_model,
         ppt_template_path=args.ppt,
         pdf_path=args.pdf,
         topic=args.topic,
         slides_count=args.slides,
         output_dir=args.output_dir,
+        project_id=project_id,
     )
     print("[DONE] Presentation generation complete.")
 
@@ -346,10 +378,12 @@ if __name__ == "__main__":
     main()
 
 """
-export OPENAI_API_KEY=sk-xxx
+
+--topic "An Introduction to Deepseek" \
+--pdf ./examples/DeepSeek-R1-short.pdf \
 
 python run_pptgen.py \
---ppt /Users/yyyang/Downloads/pptagent_test/source.pptx \
---topic "An Introduction to PPT Agent" \
---slides 6
+--ppt ./examples/default_template.pptx \
+--topic "An Introduction to Deepseek" \
+--slides 3
 """

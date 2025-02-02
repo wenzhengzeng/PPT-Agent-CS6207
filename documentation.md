@@ -171,3 +171,14 @@ Stage Output:
 - induct_cache.json (see runs/pptx/default_template/template_induct/backend/induct_cache.json)
 
 # PPT generation
+
+PPTCrew takes presentation (step 3.), slide_induction (step 5.), and doc_json + images (step 4.) as input and generates a new pptx file.
+
+```python
+crew = pptgen.PPTCrew(text_model, error_exit=False, retry_times=5)
+crew.set_reference(presentation, slide_induction)
+crew.generate_pres(generation_config, images, slides_count, doc_json)
+```
+
+Stage Input:
+- 

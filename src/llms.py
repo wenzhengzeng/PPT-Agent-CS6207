@@ -4,7 +4,7 @@ import os
 import re
 from dataclasses import asdict, dataclass
 from math import ceil
-
+import json
 import jsonlines
 import requests
 import tiktoken
@@ -72,6 +72,7 @@ class LLM:
         model: str = "gpt-4o-2024-08-06",
         api_base: str = None,
         use_batch: bool = False,
+        api_key: str = "None",
     ) -> None:
         """
         Initialize the LLM.
@@ -81,11 +82,11 @@ class LLM:
             api_base (str): The base URL for the API.
             use_batch (bool): Whether to use OpenAI's Batch API, which is single thread only.
         """
-        self.client = OpenAI(base_url=api_base)
+        self.client = OpenAI(base_url=api_base, api_key=api_key)
         if use_batch:
             self.oai_batch = Auto(loglevel=0)
         assert (
-            "OPENAI_API_KEY" in os.environ
+            ("OPENAI_API_KEY" in os.environ) or (api_key != "None")
         ), "You should provide an OpenAI API key environment variable, even it's mocked"
         self.model = model
         self.api_base = api_base
@@ -136,11 +137,22 @@ class LLM:
                 print("Failed to get response from batch")
                 raise e
         else:
-            print(f"sending messages to: {self.model}, message: {system + history + message}")
+            
+            # filter out base64 images
+            try:
+                message_to_print = json.dumps(message, ensure_ascii=False)
+                pattern = r'(data:image/[a-zA-Z]+;base64,)([A-Za-z0-9+/=]+)'
+                message_to_print = re.sub(pattern, r'\1<BASE64_IMAGE_DATA_REDACTED>', message_to_print)[:10000]
+            except Exception as e:
+                message_to_print = str(message)[:10000]
+            
+            print(f"sending messages to: {self.model}, message (truncated): {system + history + [message_to_print]}")
             completion = self.client.chat.completions.create(
                 model=self.model, messages=system + history + message
             )
             response = completion.choices[0].message.content
+            
+            print(f"response from {self.model}: {response}", style="red")
 
         message.append({"role": "assistant", "content": response})
         if return_json:
@@ -446,13 +458,37 @@ def get_model_names(llms):
         return "+".join(llm.model for llm in llms)
 
 
-gpt4o = LLM(model="gpt-4o-2024-08-06")
-qwen2_5 = LLM(model="Qwen2.5-72B-Instruct", api_base="http://124.16.138.143:7812/v1")
-qwen_vl = LLM(model="Qwen2-VL-72B-Instruct", api_base="http://124.16.138.144:7999/v1")
-intern_vl = LLM(model="InternVL2_5-78B", api_base="http://124.16.138.144:8009/v1")
+# Set up your fallback logic: if you have multiple possible LLMs, handle that in code below
+def setup_models(language_model, vision_model):
+    """
+    Try to connect to your primary model, and if unsuccessful,
+    possibly fall back to a different model.
+    """
+    if language_model.test_connection() and vision_model.test_connection():
+        print(f"Primary models connected successfully: {language_model.model} and {vision_model.model}")
+        return
 
-language_model = gpt4o
-vision_model = gpt4o
+    # if llms.gpt4o.test_connection():
+    #     print("Switching to OpenAI GPT-4o models as fallback.")
+    #     language_model = gpt4o
+    #     vision_model = gpt4o
+    #     return
+
+    raise RuntimeError(
+        "No working model connections available. Check your API keys and environment."
+    )
+
+
+# usage:
+
+# qwen2_5 = LLM(model="Qwen2.5-72B-Instruct", api_base="http://124.16.138.143:7812/v1")
+# qwen_vl = LLM(model="Qwen2-VL-72B-Instruct", api_base="http://124.16.138.144:7999/v1")
+# intern_vl = LLM(model="InternVL2_5-78B", api_base="http://124.16.138.144:8009/v1")
+
+# gpt4o = LLM(model="gpt-4o-2024-08-06")
+# language_model = gpt4o
+# vision_model = gpt4o
+
 # language_model = qwen2_5
 # vision_model = qwen_vl
 

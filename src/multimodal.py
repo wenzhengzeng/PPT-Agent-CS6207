@@ -3,7 +3,6 @@ import json
 import PIL.Image
 from rich import print
 
-import llms
 from presentation import Picture, Presentation
 from utils import Config, pbasename, pexists, pjoin
 
@@ -13,7 +12,10 @@ class ImageLabler:
     A class to extract images information, including caption, size, and appearance times in a presentation.
     """
 
-    def __init__(self, presentation: Presentation, config: Config):
+    def __init__(self, 
+                 vision_model,
+                 presentation: Presentation,
+                 config: Config):
         """
         Initialize the ImageLabler.
 
@@ -32,6 +34,8 @@ class ImageLabler:
             for name, stat in image_stats.items():
                 if pbasename(name) in self.image_stats:
                     self.image_stats[pbasename(name)] = stat
+                    
+        self.vision_model = vision_model
 
     def apply_stats(self):
         """
@@ -49,7 +53,7 @@ class ImageLabler:
         caption_prompt = open("prompts/caption.txt").read()
         for image, stats in self.image_stats.items():
             if "caption" not in stats:
-                stats["caption"] = llms.vision_model(
+                stats["caption"] = self.vision_model(
                     caption_prompt, pjoin(self.config.IMAGE_DIR, image)
                 )
                 print("captioned", image, ": ", stats["caption"])

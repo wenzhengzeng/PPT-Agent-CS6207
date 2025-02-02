@@ -32,6 +32,8 @@ class PPTGen(ABC):
 
     def __init__(
         self,
+        vision_model,
+        language_model,
         text_model: BGEM3FlagModel,
         retry_times: int = 3,
         force_pages: bool = False,
@@ -54,6 +56,11 @@ class PPTGen(ABC):
         self.retry_times = retry_times
         self.force_pages = force_pages
         self.error_exit = error_exit
+        
+        self.llm = language_model
+        self.vision_model = vision_model
+        self.language_model = language_model
+        
         self._hire_staffs(record_cost, **kwargs)
 
     def set_reference(
@@ -73,6 +80,10 @@ class PPTGen(ABC):
         """
         self.presentation = presentation
         self.slide_induction = slide_induction
+        
+        # do not affect the original slide_induction
+        slide_induction = slide_induction.copy()
+        
         self.functional_keys = slide_induction.pop("functional_keys")
         self.layout_names = list(slide_induction.keys())
         self.layout_embeddings = torch.stack(
@@ -245,6 +256,7 @@ class PPTGen(ABC):
                 env=jinja_env,
                 record_cost=record_cost,
                 text_model=self.text_model,
+                llm=self.llm,
                 **kwargs,
             )
             for role in ["planner"] + self.roles

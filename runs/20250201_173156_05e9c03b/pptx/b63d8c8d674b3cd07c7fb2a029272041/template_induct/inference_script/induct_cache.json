@@ -1,0 +1,58 @@
+{
+    "opening:text": {
+        "slides": [
+            1
+        ],
+        "template_id": 1,
+        "content_schema": {
+            "main_title": {
+                "description": "Sets the main topic or focus of the slide",
+                "type": "text",
+                "data": [
+                    "Tourism & Culture:"
+                ]
+            },
+            "subtitle": {
+                "description": "Provides additional context or specific focus related to the main title",
+                "type": "text",
+                "data": [
+                    "APPRECIATING THE TANGIBLE & THE INTANGIBLE OF BHUBANESWAR THROUGH CULTURAL TOURISM"
+                ]
+            },
+            "presenter": {
+                "description": "Identifies the person or group delivering the presentation",
+                "type": "text",
+                "data": [
+                    "By Ayona Bhaduri"
+                ]
+            }
+        }
+    },
+    "Title and Text Block on Graphic Background:text": {
+        "template_id": 3,
+        "slides": [
+            3,
+            4,
+            5
+        ],
+        "content_schema": {
+            "main_title": {
+                "description": "The main heading or subject of the slide",
+                "type": "text",
+                "data": [
+                    "What is Tourism?"
+                ]
+            },
+            "content_paragraph": {
+                "description": "Detailed information or explanation about the slide's subject matter",
+                "type": "text",
+                "data": [
+                    "The World Tourism Organisation defines tourism in terms which go Its importance was recognised in the Manila Declaration on World Tourism of 1980 as an activity essential to the life of nations because of its direct effects on the social, cultural, educational, and economic sectors of national societies and on their international relations"
+                ]
+            }
+        }
+    },
+    "functional_keys": [
+        "opening:text"
+    ]
+}

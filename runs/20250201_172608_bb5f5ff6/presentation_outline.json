@@ -1,0 +1,22 @@
+{
+    "Opening of the Presentation": {
+        "layout": "opening:text",
+        "subsections": [],
+        "description": "An introduction to 'The History of OpenAI' presentation including a brief overview of its significance and objectives."
+    },
+    "Early Developments and Technological Contributions": {
+        "layout": "Text Emphasized with Bulleted Points:text",
+        "subsections": [
+            "Initial Funding and Commitments",
+            "Release of OpenAI Gym and OpenAI Baselines",
+            "OpenAI Five and Success in Esports",
+            "The GPT Series and Natural Language Processing"
+        ],
+        "description": "Highlighting key early developments by OpenAI, including initial funding, technological releases, and significant contributions to AI research."
+    },
+    "Ending of the Presentation": {
+        "layout": "ending:text",
+        "subsections": [],
+        "description": "Summarizing the impact, ethical considerations, and future directions of OpenAI, emphasizing its vision for AGI and global impact."
+    }
+}

@@ -5,7 +5,6 @@ from collections import defaultdict
 
 from jinja2 import Template
 
-import llms
 from model_utils import get_cluster, get_image_embedding, images_cosine_similarity
 from presentation import Presentation
 from utils import Config, pexists, pjoin, tenacity
@@ -19,6 +18,8 @@ class SlideInducter:
 
     def __init__(
         self,
+        vision_model,
+        language_model,
         prs: Presentation,
         ppt_image_folder: str,
         template_image_folder: str,
@@ -51,7 +52,9 @@ class SlideInducter:
         self.split_cache = pjoin(self.output_dir, f"split_cache.json")
         self.induct_cache = pjoin(self.output_dir, f"induct_cache.json")
         os.makedirs(self.output_dir, exist_ok=True)
-
+        
+        self.vision_model = vision_model
+        self.language_model = language_model
     def layout_induct(self):
         """
         Perform layout induction for the presentation.
@@ -94,6 +97,7 @@ class SlideInducter:
             ensure_ascii=False,
         )
         return self.slide_induction
+    
 
     def category_split(self):
         """
@@ -103,7 +107,7 @@ class SlideInducter:
             split = json.load(open(self.split_cache))
             return set(split["content_slides_index"]), split["functional_cluster"]
         category_split_template = Template(open("prompts/category_split.txt").read())
-        functional_cluster = llms.language_model(
+        functional_cluster = self.language_model(
             category_split_template.render(slides=self.prs.to_text()),
             return_json=True,
         )
@@ -147,7 +151,7 @@ class SlideInducter:
                     key=lambda x: len(self.prs.slides[x - 1].shapes),
                 )
                 cluster_name = (
-                    llms.vision_model(
+                    self.vision_model(
                         template.render(
                             existed_layoutnames=list(self.slide_induction.keys()),
                         ),
@@ -168,7 +172,7 @@ class SlideInducter:
         content_induct_prompt = Template(open("prompts/content_induct.txt").read())
         for layout_name, cluster in self.slide_induction.items():
             if "template_id" in cluster and "content_schema" not in cluster:
-                schema = llms.language_model(
+                schema = self.language_model(
                     content_induct_prompt.render(
                         slide=self.prs.slides[cluster["template_id"] - 1].to_html(
                             element_id=False, paragraph_id=False

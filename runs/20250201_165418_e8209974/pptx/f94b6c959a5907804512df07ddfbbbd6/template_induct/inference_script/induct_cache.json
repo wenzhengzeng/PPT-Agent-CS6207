@@ -1,0 +1,68 @@
+{
+    "opening:text": {
+        "slides": [
+            1
+        ],
+        "template_id": 1,
+        "content_schema": {
+            "main_title": {
+                "description": "The primary title of the slide which succinctly describes the main topic",
+                "type": "text",
+                "data": [
+                    "Tourism & Culture:"
+                ]
+            },
+            "subtitle": {
+                "description": "A subtitle that provides additional context or detail about the main topic",
+                "type": "text",
+                "data": [
+                    "APPRECIATING THE TANGIBLE & THE INTANGIBLE OF BHUBANESWAR THROUGH CULTURAL TOURISM"
+                ]
+            },
+            "presenter": {
+                "description": "Name of the person or people responsible for the presentation",
+                "type": "text",
+                "data": [
+                    "By Ayona Bhaduri"
+                ]
+            }
+        }
+    },
+    "Bullet Points with Highlighted Text:text": {
+        "template_id": 2,
+        "slides": [
+            2,
+            4,
+            5
+        ],
+        "content_schema": {
+            "main_title": {
+                "description": "The main topic or title of the slide",
+                "type": "text",
+                "data": [
+                    "What is culture?"
+                ]
+            },
+            "quote_intro": {
+                "description": "An introduction to a quote or citation from a specific author",
+                "type": "text",
+                "data": [
+                    "In Sri Aurobindo’s words,"
+                ]
+            },
+            "quote_content": {
+                "description": "Provides deep insights or definitions pertinent to the main topic from a respected source",
+                "type": "text",
+                "data": [
+                    "The culture of a people may be described as the expression of a consciousness of life which formulates itself in three aspects.",
+                    "There is a side of thought, of ideal, of upward will and soul’s aspiration, which is reflected in the people’s philosophy and religion.",
+                    "There is a side of creative self-expression and appreciative aesthesis, intelligence and imagination, which finds expression in its art, poetry, literature, music, dance",
+                    "And, there is a side of practical and outward formulation, which is provided for in its society and politics"
+                ]
+            }
+        }
+    },
+    "functional_keys": [
+        "opening:text"
+    ]
+}

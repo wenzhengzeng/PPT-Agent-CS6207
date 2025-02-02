@@ -1,0 +1,37 @@
+{
+    "Opening of the Presentation": {
+        "layout": "opening:text",
+        "subsections": [],
+        "description": "Introduce the audience to the presentation on the History of OpenAI, highlighting the aim to explore its foundation, milestones, and future."
+    },
+    "Founding and Mission": {
+        "layout": "opening:text",
+        "subsections": [
+            "Inception of OpenAI",
+            "Nonprofit Beginnings"
+        ],
+        "description": "Detail the founding of OpenAI, including its inception by key figures and its initial nonprofit mission."
+    },
+    "Development Milestones": {
+        "layout": "opening:text",
+        "subsections": [
+            "Early Research and Publications",
+            "OpenAI Gym and Baselines"
+        ],
+        "description": "Discuss the early developments and contributions of OpenAI in AI research, highlighting notable publications and tools like OpenAI Gym."
+    },
+    "Commercial Transition and Achievements": {
+        "layout": "opening:text",
+        "subsections": [
+            "Transition to a 'Capped' For-Profit",
+            "Development of GPT Models",
+            "Collaboration with Microsoft"
+        ],
+        "description": "Explore OpenAI's transition to a 'capped' for-profit model, the landmark GPT Model series, and its strategic partnership with Microsoft."
+    },
+    "Ending of the Presentation": {
+        "layout": "opening:text",
+        "subsections": [],
+        "description": "Conclude the presentation with recent developments in AI research at OpenAI and its visionary plans for the future."
+    }
+}

@@ -1,0 +1,45 @@
+{
+    "metadata": {
+        "title": "Advancements in Language Model Reasoning",
+        "author": "Unknown",
+        "publish date": "Unknown",
+        "organization": "Unknown"
+    },
+    "sections": [
+        {
+            "title": "Introduction",
+            "subsections": [
+                {
+                    "title": "Recent Developments and Challenges",
+                    "content": "In recent years, Large Language Models (LLMs) have been rapidly evolving towards Artificial General Intelligence (AGI). Post-training has become a crucial phase in model enhancement, focusing on accuracy in reasoning tasks and user alignment. OpenAI's o1 series introduced scalable inference through extended Chain-of-Thought methods. However, test-time scalability is still a research challenge. Various methods like reward models, reinforcement learning, and search algorithms have been explored, yet fall short of the o1 series' performance. This paper explores reinforcing reasoning capabilities purely through reinforcement learning (RL) using DeepSeek-V3-Base and GRPO. Resulting in DeepSeek-R1-Zero, it exhibited notable improvement on reasoning benchmarks post RL steps. Despite challenges in readability and language mixing, DeepSeek-R1 was developed to further fine-tune using minimal supervised data and a multi-stage training pipeline. The distilled models notably advance reasoning benchmarks, significantly outperforming prior open-source models."
+                }
+            ]
+        },
+        {
+            "title": "Contributions",
+            "subsections": [
+                {
+                    "title": "Post-Training: Large-Scale Reinforcement Learning on the Base Model",
+                    "content": "The study emphasizes the application of RL directly to base models without preliminary supervised fine-tuning (SFT), allowing exploration of complex problem-solving CoT. DeepSeek-R1-Zero showcases self-verification and long CoTs, validated through RL alone. This paves a new path for LLM reasoning advancements. A pipeline for DeepSeek-R1 combines RL stages for reasoning pattern enhancement with two SFT stages for seeding capabilities, offering industrial benefits."
+                },
+                {
+                    "title": "Distillation: Smaller Models Can be Powerful Too",
+                    "content": "The research demonstrates larger models' reasoning patterns distilled into smaller models excel over RL-derived patterns in small models. Open-source DeepSeek-R1 supports distilling better smaller models. Evaluations show excellent performance on benchmarks using reasoning data from DeepSeek-R1. Smaller distilled models exhibit superior performance, with substantially surpassed prior models in various reasoning benchmarks. Open-sourcing of distilled checkpoints enriches community resources."
+                }
+            ]
+        },
+        {
+            "title": "Summary of Evaluation Results",
+            "subsections": [
+                {
+                    "title": "Reasoning Tasks",
+                    "content": "DeepSeek-R1 scores 79.8% Pass@1 on AIME 2024, slightly surpassing OpenAI-o1-1217, and 97.3% on MATH-500, equivalent to top-tier performance. In coding, it achieves expert-level ratings on competitive platforms, surpassing 96.3% of humans. For engineering tasks, it shows incremental enhancements over DeepSeek-V3."
+                },
+                {
+                    "title": "Knowledge Evaluation",
+                    "content": "On benchmarks like MMLU and GPQA Diamond, DeepSeek-R1 attains exceptional scores, outperforming DeepSeek-V3. It competes closely with OpenAI-o1-1217. On factual tasks, it surpasses DeepSeek-V3, indicating strength in handling factual inquiries. OpenAI-o1 remains a strong competitor."
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "Opening of the Presentation": {
+        "layout": "opening:text",
+        "subsections": [],
+        "description": "Introduction to 'Advancements in Language Model Reasoning' covering recent developments and challenges in the field."
+    },
+    "Contributions in Language Model Reasoning": {
+        "layout": "Bullet Points with Highlighted Keywords:text",
+        "subsections": [
+            "Post-Training: Large-Scale Reinforcement Learning on the Base Model",
+            "Distillation: Smaller Models Can be Powerful Too"
+        ],
+        "description": "An overview of key contributions including post-training with large-scale reinforcement learning and the effectiveness of model distillation."
+    },
+    "Evaluation and Conclusion": {
+        "layout": "ending:text",
+        "subsections": [
+            "Reasoning Tasks",
+            "Knowledge Evaluation"
+        ],
+        "description": "Summary of evaluation results, focusing on reasoning tasks and knowledge evaluation, concluding the findings of the presentation."
+    }
+}

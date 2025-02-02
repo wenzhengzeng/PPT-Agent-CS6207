@@ -1,0 +1,12 @@
+{
+    "Opening of The History of OpenAI": {
+        "layout": "opening:text",
+        "subsections": [],
+        "description": "Introducing 'The History of OpenAI', focusing on its foundation, mission, and significant milestones over the years."
+    },
+    "Ending of The History of OpenAI": {
+        "layout": "ending:text",
+        "subsections": [],
+        "description": "Concluding the presentation with a recap of OpenAI's journey and its impact on the field of artificial intelligence."
+    }
+}

@@ -1,0 +1,25 @@
+{
+    "Opening of The History of OpenAI": {
+        "layout": "opening:text",
+        "subsections": [],
+        "description": "An engaging introduction to 'The History of OpenAI', providing a brief overview of what the presentation will cover."
+    },
+    "Innovations and Achievements in OpenAI": {
+        "layout": "Title and Text Block on Graphic Background:text",
+        "subsections": [
+            "Overview of OpenAI",
+            "OpenAI Five",
+            "GPT Models",
+            "Innovations in Safety and Policy"
+        ],
+        "description": "Highlights major innovations and achievements of OpenAI, including an overview of the organization, its significant milestones such as OpenAI Gym and GPT models, and innovations in safety policies."
+    },
+    "Future Directions for OpenAI": {
+        "layout": "Title and Text Block on Graphic Background:text",
+        "subsections": [
+            "Research Focus and Goals",
+            "Public Collaborations and Outreach"
+        ],
+        "description": "Explores OpenAI's future objectives, research focus, and plans for public collaboration and outreach."
+    }
+}

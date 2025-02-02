@@ -1,0 +1,52 @@
+{
+    "opening:text": {
+        "slides": [
+            1
+        ],
+        "template_id": 1,
+        "content_schema": {
+            "main_title": {
+                "description": "Primary heading of the slide, which conveys the main subject or topic",
+                "type": "text",
+                "data": [
+                    "Title"
+                ]
+            },
+            "subtitle": {
+                "description": "Secondary heading to provide additional context or detail about the main title",
+                "type": "text",
+                "data": [
+                    "subtitle"
+                ]
+            }
+        }
+    },
+    "Title with Minimal Bullet Point:text": {
+        "template_id": 2,
+        "slides": [
+            2,
+            3,
+            4,
+            5
+        ],
+        "content_schema": {
+            "main_title": {
+                "description": "The main topic or title of the slide, typically presented prominently",
+                "type": "text",
+                "data": [
+                    "Title"
+                ]
+            },
+            "content_text": {
+                "description": "The primary text content of the slide, used to convey core information",
+                "type": "text",
+                "data": [
+                    "Text"
+                ]
+            }
+        }
+    },
+    "functional_keys": [
+        "opening:text"
+    ]
+}

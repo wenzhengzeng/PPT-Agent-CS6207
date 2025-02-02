@@ -8,10 +8,13 @@ data
 *test*
 *egg-info
 .yarn
-runs
+# runs
+*.pptx
+*slide*
 Makefile
 node_modules
 frontend/.yarn
 frontend/.pnp.loader.mjs
 frontend/.pnp.cjs
 human_eval
+api_key.json

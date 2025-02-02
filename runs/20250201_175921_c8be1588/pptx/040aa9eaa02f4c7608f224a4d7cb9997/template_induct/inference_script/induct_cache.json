@@ -1,0 +1,210 @@
+{
+    "opening:text": {
+        "slides": [
+            1
+        ],
+        "template_id": 1,
+        "content_schema": {
+            "main_title": {
+                "description": "The main heading that summarizes the slide's focus or topic",
+                "type": "text",
+                "data": [
+                    "Title text goes here"
+                ]
+            },
+            "content_bullets": {
+                "description": "A list of key points or information relevant to the slide topic",
+                "type": "text",
+                "data": [
+                    "Bullet 1",
+                    "Bullet 2",
+                    "Bullet 3"
+                ]
+            },
+            "main_image": {
+                "description": "A key visual element that supports the main topic or enhances slide clarity",
+                "type": "image",
+                "data": [
+                    "alt: Description of key image here"
+                ]
+            },
+            "presenters": {
+                "description": "Information about the presenter(s) of the slide content",
+                "type": "text",
+                "data": [
+                    "Presenter Name 1",
+                    "Presenter Name 2"
+                ]
+            },
+            "background_information": {
+                "description": "Supplementary text or data offering additional context for the slide topic",
+                "type": "text",
+                "data": [
+                    "Optional background text or explanation"
+                ]
+            },
+            "acknowledgments": {
+                "description": "Credits or thanks given to individuals, organizations, or sources",
+                "type": "text",
+                "data": [
+                    "Acknowledgment 1",
+                    "Acknowledgment 2"
+                ]
+            },
+            "data": {
+                "description": "Numerical or tabulated information that supports the slide's message",
+                "type": "text",
+                "data": [
+                    "Data description or content goes here"
+                ]
+            }
+        }
+    },
+    "ending:text": {
+        "slides": [
+            5
+        ],
+        "template_id": 5,
+        "content_schema": {
+            "main_title": {
+                "description": "The main title of the slide, typically summarizes the core topic or purpose",
+                "type": "text",
+                "data": [
+                    "Insert main title here"
+                ]
+            },
+            "subtitle": {
+                "description": "An optional subtitle providing additional context or a secondary focus",
+                "type": "text",
+                "data": [
+                    "Insert subtitle or additional context"
+                ]
+            },
+            "content_bullets": {
+                "description": "The main content of the slide organized into bullet points or key ideas",
+                "type": "text",
+                "data": [
+                    "First point",
+                    "Second point",
+                    "Third point"
+                ]
+            },
+            "main_image": {
+                "description": "A central visual element to complement the slide's topic or main title",
+                "type": "image",
+                "data": [
+                    "alt: Description of the main image"
+                ]
+            },
+            "background_information": {
+                "description": "Additional context or supporting information relevant to the main topic",
+                "type": "text",
+                "data": [
+                    "Background paragraph 1",
+                    "Background paragraph 2"
+                ]
+            },
+            "presenters": {
+                "description": "List of individuals presenting the slide or creating the content",
+                "type": "text",
+                "data": [
+                    "Presenter Name 1",
+                    "Presenter Name 2"
+                ]
+            },
+            "acknowledgments": {
+                "description": "Recognition or thanks to contributors, sources, or affiliations",
+                "type": "text",
+                "data": [
+                    "Acknowledgment 1",
+                    "Acknowledgment 2"
+                ]
+            },
+            "data_table": {
+                "description": "Structured representation of numerical, categorical, or other data to support the slide content",
+                "type": "text",
+                "data": [
+                    "Header 1 | Header 2 | Header 3",
+                    "Row 1 Data | Row 1 Data | Row 1 Data"
+                ]
+            },
+            "logos": {
+                "description": "Logos of organizations, sponsors, or affiliations",
+                "type": "image",
+                "data": [
+                    "alt: Logo description 1",
+                    "alt: Logo description 2"
+                ]
+            }
+        }
+    },
+    "Minimalistic Blank Layout:text": {
+        "template_id": 2,
+        "slides": [
+            2,
+            3,
+            4
+        ],
+        "content_schema": {
+            "main_title": {
+                "description": "The main heading or title of the slide, typically summarizing its purpose or content",
+                "type": "text",
+                "data": [
+                    "Main Title Text"
+                ]
+            },
+            "content_bullets": {
+                "description": "A list of bullet points or key content items providing supporting details or main ideas",
+                "type": "text",
+                "data": [
+                    "Bullet Point 1",
+                    "Bullet Point 2",
+                    "Bullet Point 3"
+                ]
+            },
+            "main_image": {
+                "description": "A central image or visual representation used to support the content or convey information visually",
+                "type": "image",
+                "data": [
+                    "Image Alt Text"
+                ]
+            },
+            "presenters": {
+                "description": "Details about the presenter(s) or contributors related to this slide",
+                "type": "text",
+                "data": [
+                    "Presenter Name 1",
+                    "Presenter Name 2"
+                ]
+            },
+            "background_information": {
+                "description": "Additional contextual or background information that provides more clarity or context for the slide content",
+                "type": "text",
+                "data": [
+                    "Background Paragraph 1",
+                    "Background Paragraph 2"
+                ]
+            },
+            "acknowledgments": {
+                "description": "Recognition or credit given to individuals, organizations, or sources associated with the content or creation of the slide",
+                "type": "text",
+                "data": [
+                    "Acknowledgment Text 1",
+                    "Acknowledgment Text 2"
+                ]
+            },
+            "data": {
+                "description": "Numerical or visual data, such as charts, graphs, or statistics displayed on the slide",
+                "type": "text",
+                "data": [
+                    "Data Point 1",
+                    "Data Point 2"
+                ]
+            }
+        }
+    },
+    "functional_keys": [
+        "opening:text",
+        "ending:text"
+    ]
+}

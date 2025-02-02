@@ -1,0 +1,26 @@
+{
+    "opening:text": {
+        "slides": [
+            1
+        ],
+        "template_id": 1
+    },
+    "ending:text": {
+        "slides": [
+            5
+        ],
+        "template_id": 5
+    },
+    "Title with a single bullet point.:text": {
+        "template_id": 2,
+        "slides": [
+            2,
+            3,
+            4
+        ]
+    },
+    "functional_keys": [
+        "opening:text",
+        "ending:text"
+    ]
+}
