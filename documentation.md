@@ -1,4 +1,4 @@
-# PPT Template parsing
+# 1. PPT Template parsing
 Read in the ppt file and convert each slide into an image
 
 ```python
@@ -30,7 +30,7 @@ Possible errors:
 - package failing to parse slides in pptx
 
 
-# PDF Parsing
+# 2. PDF Parsing
 Directly parses the pdf file
 
 ```python
@@ -51,7 +51,7 @@ Stage Output:
 - images from the pdf
 - meta.json (pdf meta data)
 
-# PDF Image captioning
+# 3. PDF Image captioning
 Caption the image files that were extracted from the pdf via a VLM.
 
 ```python
@@ -74,7 +74,7 @@ Stage Input:
 Stage Output:
 - caption.json
 
-# PDF markdown refine
+# 4. PDF markdown refine
 
 Convert the parsed source.md file into a json file via a LM. There is implicit summarization and editing.
 
@@ -93,7 +93,7 @@ Stage Input:
 Stage Output:
 - refined_doc.json
 
-# Slide Induction
+# 5. Slide Induction
 ## Template generation
 Create a template pptx file that only keeps the layout of parsed source.pptx, and generate images for each slide of the template.
 
@@ -113,7 +113,7 @@ Stage Output:
 - template.pptx
 - images of each slide of template.pptx
 
-## Functional Clustering
+## 5.1 Functional Clustering
 Split the slides into different categories based on their function via LM
 ```python
 #induct.py:SlideInducter.layout_induct
@@ -126,9 +126,9 @@ Stage Input:
 - LM
 
 Stage Output:
-- split_cache.json (see runs/pptx/default_template/template_induct/backend/split_cache.json)
+- split_cache.json (see runs/pptx/default_template/template_induct/backend/split_cache.json) 大概就是把ppt分类，比如开头、结尾、bullet point, Image with Descriptive Paragraph等等。
 
-## Layout Clustering
+## 5.2 Layout Clustering
 
 Split the slides into different categories based on their layout. Clusters are generated via image cosine similarity of each slide, cluster description/name is generated via VLM.
 
@@ -145,7 +145,7 @@ Stage Input:
 Stage Output:
 - ?
 
-## Content Induction
+## 5.3 Content Induction
 
 Perform content schema extraction for the presentation using a LM.
 
@@ -170,7 +170,7 @@ Stage Input:
 Stage Output:
 - induct_cache.json (see runs/pptx/default_template/template_induct/backend/induct_cache.json)
 
-# PPT generation
+# 6. PPT generation
 
 PPTCrew takes presentation (step 3.), slide_induction (step 5.), and doc_json + images (step 4.) as input and generates a new pptx file.
 
