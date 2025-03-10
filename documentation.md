@@ -126,7 +126,7 @@ Stage Input:
 - LM
 
 Stage Output:
-- split_cache.json (see runs/pptx/default_template/template_induct/backend/split_cache.json)
+- split_cache.json (see runs/pptx/default_template/template_induct/backend/split_cache.json) 补充：发现这个可能有误差，比如目前认为第二页是table of contents，然而实则不是。大致看了下prompt好像也不算错，算是LM的问题
 
 ## Layout Clustering
 
