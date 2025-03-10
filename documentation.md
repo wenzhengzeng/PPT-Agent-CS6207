@@ -91,7 +91,7 @@ Stage Input:
 - LM
 
 Stage Output:
-- refined_doc.json
+- refined_doc.json 输出其实就是按section/subsection的一个文本的Summarization，也是根据prompt来的。比如一个subsection的总结大概500字左右
 
 # 5. Slide Induction
 ## Template generation
@@ -110,7 +110,7 @@ Stage Input:
 - source.pptx
 
 Stage Output:
-- template.pptx
+- template.pptx  这个就是reference ppt但是全部内容替换成aaaaa
 - images of each slide of template.pptx
 
 ## 5.1 Functional Clustering
@@ -126,7 +126,7 @@ Stage Input:
 - LM
 
 Stage Output:
-- split_cache.json (see runs/pptx/default_template/template_induct/backend/split_cache.json) 大概就是把ppt分类，比如开头、结尾、bullet point, Image with Descriptive Paragraph等等。
+- split_cache.json (see runs/pptx/default_template/template_induct/backend/split_cache.json) 大概记录content slide是哪些页，functional的大概是哪些页（开头，结尾，目录这种），这个的prompt对应正文补充材料的Fig. 9
 
 ## 5.2 Layout Clustering
 
@@ -168,11 +168,11 @@ Stage Input:
 - LM
 
 Stage Output:
-- induct_cache.json (see runs/pptx/default_template/template_induct/backend/induct_cache.json)
+- induct_cache.json (see runs/pptx/default_template/template_induct/backend/induct_cache.json) 大概就是把ppt分类，比如开头、结尾、bullet point, Image with Descriptive Paragraph等等。里面也有slide中真正的text，这个对应文章中的slide schema extraction
 
 # 6. PPT generation
 
-PPTCrew takes presentation (step 3.), slide_induction (step 5.), and doc_json + images (step 4.) as input and generates a new pptx file.
+PPTCrew takes presentation (step 3. PDF对应的image的caption?), slide_induction (step 5.给的模板ppt里的结构，作用（包含内容）), and doc_json + images (step 4.) as input and generates a new pptx file.
 
 a). For doc_json (refined_doc.json), it will use it to generate contents for each slide, conditioned by number of slides. (Not conditioned by the layout of the slide). Example output:
 
